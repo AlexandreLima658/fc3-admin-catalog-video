@@ -1,0 +1,21 @@
+{
+  "name": "micro-videos-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.12.1",
+    "@swc/jest": "^0.2.38",
+    "@types/jest": "^29.5.14",
+    "jest": "^30.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
