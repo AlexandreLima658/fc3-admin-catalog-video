@@ -35,6 +35,29 @@ export class Category {
         return new Category(props);
     }
 
+    changeName(name: string): void {
+        this.name = name;
+    }
 
+    changeDescription(description: string): void {
+        this.description = description;
+    }
 
+    activate(){
+        this.isActive = true;
+    }
+
+    deactivate(){
+        this.isActive = false;
+    }
+
+    toJSON() {
+        return {
+            categoryId: this.categoryId,
+            name: this.name,
+            description: this.description,
+            isActive: this.isActive,
+            createdAt: this.createdAt
+        };
+    }
 }
