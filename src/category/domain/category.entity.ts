@@ -1,23 +1,23 @@
-import { CateogoryName} from "../../shared/domain/value-object/categoryName.vo";
+import { CategoryName} from "../../shared/domain/value-object/categoryName.vo";
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
 
 export type CategoryConstructorProps = {
   categoryId?: Uuid;
-  name: CateogoryName;
+  name: CategoryName;
   description?: string | null;
   isActive?: boolean;
   createdAt?: Date;
 };
 
 export type CategoryCreateCommand = {
-  name: CateogoryName;
+  name: CategoryName;
   description?: string | null;
   isActive?: boolean;
 };
 
 export class Category {
     categoryId: Uuid;
-    name: CateogoryName;
+    name: CategoryName;
     description: string | null;
     isActive: boolean;
     createdAt: Date;
@@ -35,7 +35,7 @@ export class Category {
     return new Category(props);
   }
 
-  changeName(name: CateogoryName): void {
+  changeName(name: CategoryName): void {
     this.name = name;
   }
 
