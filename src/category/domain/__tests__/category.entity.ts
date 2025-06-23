@@ -104,8 +104,8 @@ describe("Category Unit Tests", () => {
         name: new CategoryName("Movie"),
       });
 
-      let newName = new CategoryName("New Movie")
-      
+      let newName = new CategoryName("New Movie");
+
       category.changeName(newName);
 
       expect(category.name.value).toBe("New Movie");

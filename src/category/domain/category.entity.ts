@@ -1,3 +1,5 @@
+import { Entity } from "../../shared/domain/entity";
+import { ValueObject } from "../../shared/domain/value-object";
 import { CategoryName} from "../../shared/domain/value-object/categoryName.vo";
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
 
@@ -15,7 +17,7 @@ export type CategoryCreateCommand = {
   isActive?: boolean;
 };
 
-export class Category {
+export class Category extends Entity{
     categoryId: Uuid;
     name: CategoryName;
     description: string | null;
@@ -23,6 +25,7 @@ export class Category {
     createdAt: Date;
   
   constructor(props: CategoryConstructorProps) {
+    super();
     this.categoryId = props.categoryId || new Uuid();
     this.name = props.name;
     this.description = props.description ?? null;
@@ -49,6 +52,10 @@ export class Category {
 
   deactivate() {
     this.isActive = false;
+  }
+
+  get entityId(): ValueObject {
+    return this.categoryId;
   }
 
   toJSON() {
