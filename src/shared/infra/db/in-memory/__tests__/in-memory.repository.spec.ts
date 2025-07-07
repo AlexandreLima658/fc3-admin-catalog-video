@@ -1,6 +1,6 @@
-import { NotFoundException } from "../../../../category/domain/commons/exceptions/not-found.exception";
-import { Entity } from "../../../domain/entity";
-import { Uuid } from "../../../domain/value-object/uuid.vo";
+import { NotFoundException } from "../../../../../category/domain/commons/exceptions/not-found.exception";
+import { Entity } from "../../../../domain/entity";
+import { Uuid } from "../../../../domain/value-object/uuid.vo";
 
 import { InMemoryRepository } from "../in-memory.repository";
 
