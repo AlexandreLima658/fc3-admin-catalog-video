@@ -2,9 +2,10 @@ import { Entity } from "../../shared/domain/entity";
 import { ValueObject } from "../../shared/domain/value-object";
 import { CategoryName} from "../../shared/domain/value-object/categoryName.vo";
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
+import { CategoryFakeBuilder } from "./category-fake.builder";
 
 export type CategoryConstructorProps = {
-  categoryId?: Uuid;
+  categoryId?: CategoryId;
   name: CategoryName;
   description?: string | null;
   isActive?: boolean;
@@ -17,8 +18,10 @@ export type CategoryCreateCommand = {
   isActive?: boolean;
 };
 
-export class Category extends Entity{
-    categoryId: Uuid;
+export class CategoryId extends Uuid{};
+
+export class  Category extends Entity{
+    categoryId: CategoryId;
     name: CategoryName;
     description: string | null;
     isActive: boolean;
@@ -26,7 +29,7 @@ export class Category extends Entity{
   
   constructor(props: CategoryConstructorProps) {
     super();
-    this.categoryId = props.categoryId || new Uuid();
+    this.categoryId = props.categoryId || new CategoryId();
     this.name = props.name;
     this.description = props.description ?? null;
     this.isActive = props.isActive ?? true;
@@ -56,6 +59,10 @@ export class Category extends Entity{
 
   get entityId(): ValueObject {
     return this.categoryId;
+  }
+
+  static fake() {
+    return CategoryFakeBuilder;
   }
 
   toJSON() {
