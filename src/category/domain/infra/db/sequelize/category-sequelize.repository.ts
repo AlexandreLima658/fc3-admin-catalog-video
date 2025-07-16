@@ -1,13 +1,14 @@
-import { isAlpha } from "class-validator";
-import { Entity } from "../../../../../shared/domain/entity";
-import { SearchParams } from "../../../../../shared/domain/repository/search-param";
-import { SearchResult } from "../../../../../shared/domain/repository/search-results";
 import { CategoryName } from "../../../../../shared/domain/value-object/categoryName.vo";
 import { Uuid } from "../../../../../shared/domain/value-object/uuid.vo";
 import { Category, CategoryId } from "../../../category.entity";
-import { ICategoryRepository } from "../../../category.repository";
+import {
+  CategorySearchParams,
+  CategorySearchResult,
+  ICategoryRepository,
+} from "../../../category.repository";
 import { CategoryModel } from "./category.model";
-import { CreatedAt } from "sequelize-typescript";
+import { NotFoundException } from "../../../commons/exceptions/not-found.exception";
+import { Op } from "sequelize";
 
 export class CategorySequelizeRepository implements ICategoryRepository {
   sortebleFields: string[] = ["name", "createdAt"];
@@ -36,15 +37,43 @@ export class CategorySequelizeRepository implements ICategoryRepository {
     );
   }
 
-  update(entity: Category): Promise<void> {
-    throw new Error("Method not implemented.");
+  async update(entity: Category): Promise<void> {
+    const id = entity.categoryId.id;
+    const model = this._get(id);
+
+    if (!model) {
+      throw new NotFoundException(id, this.getEntity());
+    }
+
+    await this.categoryModel.update(
+      {
+        categoryId: entity.categoryId.id,
+        name: entity.name.value,
+        description: entity.description,
+        isActive: entity.isActive,
+        createdAt: entity.createdAt,
+      },
+      { where: { categoryId: id } }
+    );
   }
-  delete(entityId: Uuid): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async delete(categoryId: Uuid): Promise<void> {
+    const id = categoryId.id;
+    const model = this._get(id);
+
+    if (!model) {
+      throw new NotFoundException(id, this.getEntity());
+    }
+
+    await this.categoryModel.destroy({ where: { categoryId: id } });
+  }
+
+  private async _get(id: string) {
+    return await this.categoryModel.findByPk(id);
   }
 
   async findById(entityId: Uuid): Promise<Category | null> {
-    const model = await this.categoryModel.findByPk(entityId.id);
+    const model = await this._get(entityId.id);
     return new Category({
       categoryId: new CategoryId(model.categoryId),
       name: new CategoryName(model.name),
@@ -56,7 +85,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
 
   async findAll(): Promise<Category[]> {
     const models = await this.categoryModel.findAll();
-    return models.map((model) => {  
+    return models.map((model) => {
       return new Category({
         categoryId: new CategoryId(model.categoryId),
         name: new CategoryName(model.name),
@@ -71,7 +100,36 @@ export class CategorySequelizeRepository implements ICategoryRepository {
     return Category;
   }
 
-  search(props: SearchParams<string>): Promise<SearchResult<Entity>> {
-    throw new Error("Method not implemented.");
+  async search(props: CategorySearchParams): Promise<CategorySearchResult> {
+    const offset = (props.page - 1) * props.perPage;
+    const limit = props.perPage;
+
+    const { rows: models, count } = await this.categoryModel.findAndCountAll({
+      ...(props.filter && {
+        where: {
+          name: { [Op.like]: `%${props.filter}%` },
+        },
+      }),
+      ...(props.sort && this.sortebleFields.includes(props.sort)
+        ? { order: [[props.sort, props.sortDir]] }
+        : { order: [["createAt", "desc"]] }),
+      offset,
+      limit,
+    });
+
+    return new CategorySearchResult({
+      items: models.map((model) => {
+        return new Category({
+          categoryId: new CategoryId(model.categoryId),
+          name: new CategoryName(model.name),
+          description: model.description,
+          isActive: model.isActive,
+          createdAt: model.createdAt,
+        });
+      }),
+      currentPage: props.page,
+      perPage: props.perPage,
+      total: count,
+    });
   }
 }
