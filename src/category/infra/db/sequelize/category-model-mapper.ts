@@ -1,5 +1,5 @@
-import { CategoryName } from "../../../../../shared/domain/value-object/categoryName.vo";
-import { Category, CategoryId } from "../../../category.entity";
+import { CategoryName } from "../../../../shared/domain/value-object/categoryName.vo";
+import { Category, CategoryId } from "../../../domain/category.entity";
 import { CategoryModel } from "./category.model";
 
 export class CategoryModelMapper {
