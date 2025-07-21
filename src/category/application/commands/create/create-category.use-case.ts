@@ -1,7 +1,8 @@
-import { IUseCase } from "../../shared/application/use-case.interface";
-import { CategoryName } from "../../shared/domain/value-object/categoryName.vo";
-import { Category } from "../domain/category.entity";
-import { ICategoryRepository } from "../domain/category.repository";
+import { IUseCase } from "../../../../shared/application/use-case.interface";
+import { Category } from "../../../domain/category.entity";
+import { ICategoryRepository } from "../../../domain/category.repository";
+import { CreateCategoryInput } from "./create-category.input";
+import { CreateCategoryOutput } from "./create-cateogory.output";
 
 export class CreateCategoryUseCase
   implements IUseCase<CreateCategoryInput, CreateCategoryOutput>
@@ -24,16 +25,4 @@ export class CreateCategoryUseCase
   }
 }
 
-export type CreateCategoryInput = {
-  name: CategoryName;
-  description?: string | null;
-  isActive?: boolean;
-};
 
-export type CreateCategoryOutput = {
-  id: string;
-  name: string;
-  description?: string | null;
-  isActive?: boolean;
-  createdAt: Date;
-};

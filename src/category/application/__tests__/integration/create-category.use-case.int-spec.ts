@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import { CategoryModel } from "../../../infra/db/sequelize/category.model";
-import { CreateCategoryUseCase } from "../../create-category.use-case";
+import { CreateCategoryUseCase } from "../../commands/create/create-category.use-case";
 import { CategorySequelizeRepository } from "../../../infra/db/sequelize/category-sequelize.repository";
 import { CategoryName } from "../../../../shared/domain/value-object/categoryName.vo";
 import { CategoryId } from "../../../domain/category.entity";
