@@ -1,11 +1,8 @@
 import {
-  AllowNull,
-  CreatedAt,
   DataType,
   Sequelize,
 } from "sequelize-typescript";
 import { CategoryModel } from "../category.model";
-import { Category } from "../../../../domain/category.entity";
 
 describe("CategoryModel Integration Test", () => {
   let sequelize;

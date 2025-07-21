@@ -4,7 +4,8 @@ import {
   InMemoryRepository,
   InMemorySearchRepository,
 } from "../../../../shared/infra/db/in-memory/in-memory.repository";
-import { Category } from "../../category.entity";
+import { Category } from "../../../domain/category.entity";
+
 
 export class CategoryInMemoryRepository extends InMemorySearchRepository<
   Category,
