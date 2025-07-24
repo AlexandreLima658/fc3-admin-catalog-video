@@ -1,13 +1,13 @@
-import { IUseCase } from "../../../../shared/application/use-case.interface";
+import { IUseCase } from "../../../../shared/application/use-case.abstract";
 import { Category } from "../../../domain/category.entity";
 import { ICategoryRepository } from "../../../domain/category.repository";
 import { CreateCategoryInput } from "./create-category.input";
 import { CreateCategoryOutput } from "./create-cateogory.output";
 
 export class CreateCategoryUseCase
-  implements IUseCase<CreateCategoryInput, CreateCategoryOutput>
+  extends IUseCase<CreateCategoryInput, CreateCategoryOutput>
 {
-  constructor(private readonly repository: ICategoryRepository) {}
+  constructor(private readonly repository: ICategoryRepository) {super()}
 
   async execute(input: CreateCategoryInput): Promise<CreateCategoryOutput> {
     

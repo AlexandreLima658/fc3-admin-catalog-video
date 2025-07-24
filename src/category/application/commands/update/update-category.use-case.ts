@@ -1,4 +1,4 @@
-import { IUseCase } from "../../../../shared/application/use-case.interface";
+import { IUseCase } from "../../../../shared/application/use-case.abstract";
 import { CategoryName } from "../../../../shared/domain/value-object/categoryName.vo";
 import { Category, CategoryId } from "../../../domain/category.entity";
 import { ICategoryRepository } from "../../../domain/category.repository";
@@ -6,10 +6,11 @@ import { NotFoundException } from "../../../domain/commons/exceptions/not-found.
 import { UpdateCategoruInput } from "./update-category.input";
 import { UpdateCategoruOutput } from "./update-category.output";
 
-export class UpdateCategoryUseCase
-  implements IUseCase<UpdateCategoruInput, UpdateCategoruOutput>
-{
-  constructor(private readonly repository: ICategoryRepository) {}
+export class UpdateCategoryUseCase extends IUseCase<UpdateCategoruInput,UpdateCategoruOutput> {
+ 
+  constructor(private readonly repository: ICategoryRepository) {
+    super();
+  }
 
   async execute(input: UpdateCategoruInput): Promise<UpdateCategoruOutput> {
     const id = new CategoryId(input.categoryId);
@@ -43,5 +44,3 @@ export class UpdateCategoryUseCase
     };
   }
 }
-
-
