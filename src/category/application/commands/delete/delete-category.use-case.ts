@@ -3,12 +3,12 @@ import { Uuid } from "../../../../shared/domain/value-object/uuid.vo";
 import { ICategoryRepository } from "../../../domain/category.repository";
 
 
-export class DeleteCategoryUseCase extends UnitUseCase<DeleteCategoryInput> {
+export class DeleteCategoryUseCase extends UnitUseCase<string> {
 
     constructor(private readonly repository: ICategoryRepository) { super() }
     
-    async execute(input: DeleteCategoryInput): Promise<void> {
-        const uuid = new Uuid(input.id);
+    async execute(id: string): Promise<void> {
+        const uuid = new Uuid(id);
         await this.repository.delete(uuid)
     }
 

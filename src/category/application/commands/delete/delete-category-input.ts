@@ -1,3 +1,0 @@
-type DeleteCategoryInput = {
-    id: string
-}
