@@ -1,11 +1,11 @@
-import { CreatedAt, Sequelize } from "sequelize-typescript";
+import { Sequelize } from "sequelize-typescript";
 import { CategorySequelizeRepository } from "../../../infra/db/sequelize/category-sequelize.repository";
 import { UpdateCategoryUseCase } from "../../commands/update/update-category.use-case";
 import { CategoryModel } from "../../../infra/db/sequelize/category.model";
 import { Uuid } from "../../../../shared/domain/value-object/uuid.vo";
 import { NotFoundException } from "../../../domain/commons/exceptions/not-found.exception";
 import { Category } from "../../../domain/category.entity";
-import { StringToNumber } from "lodash";
+
 
 describe("UpdateCategory Integration tests", () => {
   let useCase: UpdateCategoryUseCase;
@@ -43,7 +43,7 @@ describe("UpdateCategory Integration tests", () => {
     });
 
     expect(output).toStrictEqual({
-      categoryId: entity.categoryId.id,
+      id: entity.categoryId.id,
       name: "test",
       description: entity.description,
       isActive: entity.isActive,
@@ -95,7 +95,7 @@ describe("UpdateCategory Integration tests", () => {
       const entityUpdated = await repository.findById(new Uuid(i.input.id));
 
       expect(output).toStrictEqual({
-        categoryId: entity.categoryId.id,
+        id: entity.categoryId.id,
         name: i.expected.name,
         description: i.expected.description,
         isActive: i.expected.isActive,
