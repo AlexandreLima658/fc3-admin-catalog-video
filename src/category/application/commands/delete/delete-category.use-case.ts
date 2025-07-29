@@ -1,15 +1,23 @@
-import { UnitUseCase } from "../../../../shared/application/use-case.abstract";
-import { Uuid } from "../../../../shared/domain/value-object/uuid.vo";
+import { IUseCase } from "../../../../shared/application/use-case.abstract";
+import { CategoryId } from "../../../domain/category.entity";
 import { ICategoryRepository } from "../../../domain/category.repository";
 
+export class DeleteCategoryUseCase extends IUseCase<
+  DeleteCategoryInput,
+  DeleteCategoryOutput
+> {
+  constructor(private repository: ICategoryRepository) {
+    super();
+  }
 
-export class DeleteCategoryUseCase extends UnitUseCase<string> {
-
-    constructor(private readonly repository: ICategoryRepository) { super() }
-    
-    async execute(id: string): Promise<void> {
-        const uuid = new Uuid(id);
-        await this.repository.delete(uuid)
-    }
-
+  async execute(input: DeleteCategoryInput): Promise<DeleteCategoryOutput> {
+    const categoryId = new CategoryId(input.id);
+    await this.repository.delete(categoryId);
+  }
 }
+
+export type DeleteCategoryInput = {
+  id: string;
+};
+
+type DeleteCategoryOutput = void;

@@ -40,6 +40,7 @@ export abstract class InMemoryRepository<
     const indexFound = this.items.findIndex((item) =>
       item.entityId.equals(entityId)
     );
+
     if (indexFound === -1) {
       throw new NotFoundException(entityId, this.getEntity());
     }
@@ -69,7 +70,6 @@ export abstract class InMemorySearchRepository<
   sortebleFields: string[] = [];
 
   async search(props: SearchParams<Filter>): Promise<SearchResult<E>> {
-    
     const itemsFiltered = await this.applyFilter(this.items, props.filter);
     const itemSorted = this.applySort(itemsFiltered, props.sort, props.sortDir);
     const itemPaginated = this.applyPaginate(
