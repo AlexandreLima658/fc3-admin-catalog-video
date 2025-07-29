@@ -1,7 +1,3 @@
-export type UpdateCategoruOutput = {
-  categoryId: string;
-  name: string;
-  description: string;
-  isActive: boolean;
-  createdAt: Date;
-};
+import { CategoryOutput } from "../../commons/category-output";
+
+export type UpdateCategoruOutput = CategoryOutput;

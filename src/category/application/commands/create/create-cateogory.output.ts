@@ -1,7 +1,4 @@
-export type CreateCategoryOutput = {
-  id: string;
-  name: string;
-  description?: string | null;
-  isActive?: boolean;
-  createdAt: Date;
-};
+import { CategoryOutput } from "../../commons/category-output";
+
+
+export type CreateCategoryOutput = CategoryOutput;

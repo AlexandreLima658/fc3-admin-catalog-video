@@ -1,6 +1,7 @@
 import { IUseCase } from "../../../../shared/application/use-case.abstract";
 import { Category } from "../../../domain/category.entity";
 import { ICategoryRepository } from "../../../domain/category.repository";
+import { CategoryOutputMapper } from "../../commons/category-output";
 import { CreateCategoryInput } from "./create-category.input";
 import { CreateCategoryOutput } from "./create-cateogory.output";
 
@@ -15,13 +16,7 @@ export class CreateCategoryUseCase
     
     await this.repository.insert(entity);
 
-    return {
-      id: entity.categoryId.id,
-      name: entity.name.value,
-      description: entity.description,
-      isActive: entity.isActive,
-      createdAt: entity.createdAt,
-    };
+    return CategoryOutputMapper.toOutput(entity);
   }
 }
 

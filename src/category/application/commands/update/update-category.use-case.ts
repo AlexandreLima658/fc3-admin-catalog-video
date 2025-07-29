@@ -3,6 +3,7 @@ import { CategoryName } from "../../../../shared/domain/value-object/categoryNam
 import { Category, CategoryId } from "../../../domain/category.entity";
 import { ICategoryRepository } from "../../../domain/category.repository";
 import { NotFoundException } from "../../../domain/commons/exceptions/not-found.exception";
+import { CategoryOutputMapper } from "../../commons/category-output";
 import { UpdateCategoruInput } from "./update-category.input";
 import { UpdateCategoruOutput } from "./update-category.output";
 
@@ -35,12 +36,6 @@ export class UpdateCategoryUseCase extends IUseCase<UpdateCategoruInput,UpdateCa
 
     await this.repository.update(category);
 
-    return {
-      categoryId: category.categoryId.id,
-      name: category.name.value,
-      description: category.description,
-      isActive: category.isActive,
-      createdAt: category.createdAt,
-    };
+    return CategoryOutputMapper.toOutput(category);
   }
 }
