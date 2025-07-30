@@ -1,4 +1,3 @@
-import { CategoryOutput } from "../../commons/category-output";
-
+import { CategoryOutput } from '../../commons/category-output';
 
 export type CreateCategoryOutput = CategoryOutput;

@@ -1,14 +1,14 @@
-import { CategoryName } from "../../../../shared/domain/value-object/categoryName.vo";
+import { CategoryName } from '../../../../shared/domain/value-object/categoryName.vo';
 import {
   InvalidUuidError,
   Uuid,
-} from "../../../../shared/domain/value-object/uuid.vo";
-import { Category } from "../../../domain/category.entity";
-import { NotFoundException } from "../../../domain/commons/exceptions/not-found.exception";
-import { CategoryInMemoryRepository } from "../../../infra/db/in-memory/category-in-memory.repository";
-import { UpdateCategoryUseCase } from "../../commands/update/update-category.use-case";
+} from '../../../../shared/domain/value-object/uuid.vo';
+import { Category } from '../../../domain/category.entity';
+import { NotFoundException } from '../../../domain/commons/exceptions/not-found.exception';
+import { CategoryInMemoryRepository } from '../../../infra/db/in-memory/category-in-memory.repository';
+import { UpdateCategoryUseCase } from '../../commands/update/update-category.use-case';
 
-describe("UpdateCategory Unit test", () => {
+describe('UpdateCategory Unit test', () => {
   let useCase: UpdateCategoryUseCase;
   let repository: CategoryInMemoryRepository;
 
@@ -17,33 +17,33 @@ describe("UpdateCategory Unit test", () => {
     useCase = new UpdateCategoryUseCase(repository);
   });
 
-  test("should throws error when entity not found", async () => {
+  test('should throws error when entity not found', async () => {
     await expect(() =>
-      useCase.execute({ categoryId: "fake id", name: "fake" })
+      useCase.execute({ categoryId: 'fake id', name: 'fake' }),
     ).rejects.toThrow(new InvalidUuidError());
 
     const uuid = new Uuid();
 
     await expect(() =>
-      useCase.execute({ categoryId: uuid.id, name: "fake" })
+      useCase.execute({ categoryId: uuid.id, name: 'fake' }),
     ).rejects.toThrow(new NotFoundException(uuid.id, Category));
   });
 
-  test("should update a category", async () => {
-    const spyUpdate = jest.spyOn(repository, "update");
-    const entity = new Category({ name: new CategoryName("Movie") });
+  test('should update a category', async () => {
+    const spyUpdate = jest.spyOn(repository, 'update');
+    const entity = new Category({ name: new CategoryName('Movie') });
 
     repository.items = [entity];
 
     let output = await useCase.execute({
       categoryId: entity.categoryId.id,
-      name: "test",
+      name: 'test',
     });
 
     expect(spyUpdate).toHaveBeenCalledTimes(1);
     expect(output).toStrictEqual({
       id: entity.categoryId.id,
-      name: "test",
+      name: 'test',
       description: null,
       isActive: entity.isActive,
       createdAt: entity.createdAt,
@@ -70,12 +70,12 @@ describe("UpdateCategory Unit test", () => {
         input: {
           id: entity.categoryId.id,
           name: entity.name.value,
-          description: "some description",
+          description: 'some description',
         },
         expected: {
           id: entity.categoryId.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
           isActive: true,
           createdAt: entity.createdAt,
         },
@@ -85,9 +85,9 @@ describe("UpdateCategory Unit test", () => {
     for (const i of arrange) {
       output = await useCase.execute({
         categoryId: i.input.id,
-        ...("name" in i.input && { name: i.input.name }),
-        ...("description" in i.input && { description: i.input.description }),
-        ...("isActive" in i.input && { isActive: i.input.isActive }),
+        ...('name' in i.input && { name: i.input.name }),
+        ...('description' in i.input && { description: i.input.description }),
+        ...('isActive' in i.input && { isActive: i.input.isActive }),
       });
 
       expect(output).toStrictEqual({

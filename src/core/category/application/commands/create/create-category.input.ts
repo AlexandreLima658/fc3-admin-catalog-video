@@ -1,4 +1,4 @@
-import { CategoryName } from "../../../../shared/domain/value-object/categoryName.vo";
+import { CategoryName } from '../../../../shared/domain/value-object/categoryName.vo';
 
 export type CreateCategoryInput = {
   name: CategoryName;

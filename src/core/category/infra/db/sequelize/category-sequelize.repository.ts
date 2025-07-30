@@ -1,18 +1,18 @@
-import { CategoryName } from "../../../../shared/domain/value-object/categoryName.vo";
-import { Uuid } from "../../../../shared/domain/value-object/uuid.vo";
-import { Category, CategoryId } from "../../../domain/category.entity";
+import { CategoryName } from '../../../../shared/domain/value-object/categoryName.vo';
+import { Uuid } from '../../../../shared/domain/value-object/uuid.vo';
+import { Category, CategoryId } from '../../../domain/category.entity';
 import {
   CategorySearchParams,
   CategorySearchResult,
   ICategoryRepository,
-} from "../../../domain/category.repository";
-import { CategoryModel } from "./category.model";
-import { NotFoundException } from "../../../domain/commons/exceptions/not-found.exception";
-import { Op } from "sequelize";
-import { CategoryModelMapper } from "./category-model-mapper";
+} from '../../../domain/category.repository';
+import { CategoryModel } from './category.model';
+import { NotFoundException } from '../../../domain/commons/exceptions/not-found.exception';
+import { Op } from 'sequelize';
+import { CategoryModelMapper } from './category-model-mapper';
 
 export class CategorySequelizeRepository implements ICategoryRepository {
-  sortebleFields: string[] = ["name", "createdAt"];
+  sortebleFields: string[] = ['name', 'createdAt'];
 
   constructor(private categoryModel: typeof CategoryModel) {}
 
@@ -23,7 +23,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
 
   async bulkInsert(entities: Category[]): Promise<void> {
     const models = entities.map((entity) =>
-      CategoryModelMapper.toModel(entity)
+      CategoryModelMapper.toModel(entity),
     );
     await this.categoryModel.bulkCreate(models);
   }
@@ -66,7 +66,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   async findAll(): Promise<Category[]> {
     const models = await this.categoryModel.findAll();
     return models.map((model) => {
-      return CategoryModelMapper.toEntity(model)
+      return CategoryModelMapper.toEntity(model);
     });
   }
 
@@ -86,7 +86,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
       }),
       ...(props.sort && this.sortebleFields.includes(props.sort)
         ? { order: [[props.sort, props.sortDir]] }
-        : { order: [["createAt", "desc"]] }),
+        : { order: [['createAt', 'desc']] }),
       offset,
       limit,
     });

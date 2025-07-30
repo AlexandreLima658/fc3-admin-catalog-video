@@ -1,6 +1,6 @@
-import { IUseCase } from "../../../../shared/application/use-case.abstract";
-import { CategoryId } from "../../../domain/category.entity";
-import { ICategoryRepository } from "../../../domain/category.repository";
+import { IUseCase } from '../../../../shared/application/use-case.abstract';
+import { CategoryId } from '../../../domain/category.entity';
+import { ICategoryRepository } from '../../../domain/category.repository';
 
 export class DeleteCategoryUseCase extends IUseCase<
   DeleteCategoryInput,
