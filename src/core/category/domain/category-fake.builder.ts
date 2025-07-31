@@ -8,7 +8,8 @@ export class CategoryFakeBuilder<TBuild = any> {
   // auto generated in entity
   private _categoryId: PropOrFactory<CategoryId> | undefined = undefined;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private _name: PropOrFactory<CategoryName> = (_index) => new CategoryName(this.chance.word());
+  private _name: PropOrFactory<CategoryName> = (_index) =>
+    new CategoryName(this.chance.word());
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _description: PropOrFactory<string | null> = (_index) =>
     this.chance.paragraph();
@@ -84,10 +85,10 @@ export class CategoryFakeBuilder<TBuild = any> {
             createdAt: this.callFactory(this._createdAt, index),
           }),
         });
-       // category.validate();
+        // category.validate();
         return category;
       });
-    return this.countObjs === 1 ? (categories[0] as any) : categories;
+    return (this.countObjs === 1 ? categories[0] : categories) as TBuild;
   }
 
   get categoryId() {
